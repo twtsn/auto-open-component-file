@@ -1,17 +1,15 @@
-const {port} = require('./env');
 const openFile = function (event, dom) {
     event.stopPropagation();
     let filePath = dom.getAttribute('data-file');
     if (!filePath) {
         return;
     }
-    let data = {filePath}
-    fetch(`http://localhost:${port}`, {
+    fetch('http://localhost:3000', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({filePath})
     });
 }
 const updateTemplate = function (resourcePath, template) {
