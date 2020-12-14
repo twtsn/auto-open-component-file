@@ -2,6 +2,7 @@ const Koa = require('koa');
 const nodeCmd = require('node-cmd');
 const bodyParser = require('koa-bodyparser');
 const app = new Koa();
+const {port, exePath} = require('./env.js');
 app.use(bodyParser());
 app.use(async (ctx, next) => {
     await next();
@@ -14,9 +15,8 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async ctx => {
-    let {exePath, filePath} = ctx.request.body;
-    if(exePath && filePath){
-        exePath = decodeURIComponent(exePath);
+    let {filePath} = ctx.request.body;
+    if(filePath){
         filePath = decodeURIComponent(filePath);
         console.log('open file exe', exePath);
         console.log('open file', filePath);
@@ -29,5 +29,4 @@ app.use(async ctx => {
     }
     ctx.body = 'success';
 });
-
-app.listen(3000);
+app.listen(port);

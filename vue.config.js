@@ -5,9 +5,7 @@ module.exports = {
             test: /\.vue$/,
             use: [{
                 loader: './file-server/auto-open-vue.js',
-                options: {
-                    exePath: "D:\\Program Files\\JetBrains\\WebStorm 2018.1.3\\bin\\webstorm64.exe"
-                }
+                options: {}
             }]
         })
     },

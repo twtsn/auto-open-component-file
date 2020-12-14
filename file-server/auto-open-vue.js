@@ -1,13 +1,12 @@
-const openFile = function (event, dom, exePath) {
+const {port} = require('./env');
+const openFile = function (event, dom) {
     event.stopPropagation();
     let filePath = dom.getAttribute('data-file');
     if (!filePath) {
         return;
     }
-    let data = {
-        exePath, filePath
-    }
-    fetch('http://localhost:3000', {
+    let data = {filePath}
+    fetch(`http://localhost:${port}`, {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -15,18 +14,18 @@ const openFile = function (event, dom, exePath) {
         body: JSON.stringify(data)
     });
 }
-const updateTemplate = function (resourcePath, template, exePath) {
-    if (!template || !template.content) {
+const updateTemplate = function (resourcePath, template) {
+    if(!template || !template.content){
         return '';
     }
-    return `<template><div onclick="openFileInEXE(event, this, '${exePath}')" style="display: inline-block" data-file="${resourcePath}">
+    return `<template><div onclick="openFileInEXE(event, this)" style="display: inline-block" data-file="${resourcePath}">
 ${template.content}</div></template>`
 }
-const updateScript = function (resourcePath, script, tmeplate) {
-    if (!script || !script.content) {
+const updateScript = function (script, template) {
+    if(!script || !script.content){
         return '';
     }
-    let templateStr = tmeplate ? tmeplate.content : '';
+    let templateStr = template && template.content ? template.content : '';
     if (templateStr.indexOf('router-link') > -1) {
         return `<script>${script.content}</script>`;
     }
@@ -38,12 +37,12 @@ const updateStyles = function (styles) {
         return `<style :scoped="${!!item.scoped}">${item.content}</style>`
     }).join('\n');
 }
-module.exports = function loader (source) {
+module.exports = function loader(source) {
     const compile = require('vue-template-compiler');
     const sourceMap = compile.parseComponent(source);
-    const filePath = encodeURIComponent(this.resourcePath), exePath = encodeURIComponent(this.query.exePath);
-    let templateStr = updateTemplate(filePath, sourceMap.template, exePath);
-    let scriptStr = updateScript(filePath, sourceMap.script, sourceMap.template);
+    const filePath = encodeURIComponent(this.resourcePath);
+    let templateStr = updateTemplate(filePath, sourceMap.template);
+    let scriptStr = updateScript(sourceMap.script, sourceMap.template);
     let styleStr = updateStyles(sourceMap.styles);
     let result = templateStr + scriptStr + styleStr;
     return result;
