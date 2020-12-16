@@ -8,7 +8,7 @@ vue.config.js：配置自定义vue-loader文件
 file-server: 存放node server和vue-loader文件
 ```
 ##如何配置
-![Image text](https://github.com/twtsn/auto-open-component-file/tree/main/public/demo.gif)
+![image](https://github.com/twtsn/auto-open-component-file/tree/main/public/demo.gif)
 
 ### 除了你的项目程序外，需要再启动一个file-server 的node服务
 ###1.复制file-server到你的项目根目录
