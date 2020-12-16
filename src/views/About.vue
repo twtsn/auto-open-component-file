@@ -4,20 +4,12 @@
   </div>
 </template>
 <script>
-  export default {
-
-  }
+    export default {}
 </script>
 <style scoped>
-  .test{
-
+</style>
+<style lang="less">
+  .test {
+    background: red;
   }
-</style>
-<style>
-.test{
-
-}
-</style>
-<style>
-
 </style>

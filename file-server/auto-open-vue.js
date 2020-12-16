@@ -1,17 +1,18 @@
-const openFile = function (event, dom) {
+const {port} = require('./env');
+const openFileFunc = `function (event, dom) {
     event.stopPropagation();
     let filePath = dom.getAttribute('data-file');
     if (!filePath) {
         return;
     }
-    fetch('http://localhost:3000', {
+    fetch('http://localhost:${port}', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({filePath})
     });
-}
+}`
 const updateTemplate = function (resourcePath, template) {
     if(!template || !template.content){
         return '';
@@ -27,12 +28,12 @@ const updateScript = function (script, template) {
     if (templateStr.indexOf('router-link') > -1) {
         return `<script>${script.content}</script>`;
     }
-    let event = `\n window.openFileInEXE = ${openFile.toString()} \n`;
+    let event = `\n window.openFileInEXE = ${openFileFunc} \n`;
     return `<script>${event}${script.content}</script>`;
 }
 const updateStyles = function (styles) {
     return styles.map((item) => {
-        return `<style :scoped="${!!item.scoped}">${item.content}</style>`
+        return `<style :scoped="${!!item.scoped}" lang="${item.lang || ''}">${item.content}</style>`
     }).join('\n');
 }
 module.exports = function loader(source) {
