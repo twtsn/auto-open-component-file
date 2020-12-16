@@ -7,7 +7,7 @@
 ```
 如何配置
 
-![image](https://github.com/twtsn/auto-open-component-file/tree/main/public/demo.gif)
+![image](https://github.com/twtsn/auto-open-component-file/blob/main/public/demo.gif)
 
 ### 除了你的项目程序外，需要再启动一个file-server 的node服务
 1.复制file-server到你的项目根目录
