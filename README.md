@@ -2,7 +2,7 @@
 
 实现原理
 ```
-通过自定义的vue-loader修改uve文件源码，注入文件路径和打开事件，通过fetch发送请求到node服务打开文件，
+通过自定义的vue-loader修改vue文件源码，注入文件路径和打开事件，通过fetch发送请求到node服务打开文件，
 后台启动一个node server,用来执行cmd命令，打开文件
 ```
 如何配置
